@@ -3,24 +3,22 @@
 #include <iostream>
 #include <sstream>
 
+using namespace std;
+
 InstanceReader::InstanceReader() : type(0), num_vehicles(0), num_customers(0), num_depots(0) {}
 
-bool InstanceReader::readFile(const std::string& filename) {
-    std::ifstream file(filename);
+bool InstanceReader::readFile(const string& filename) {
+    ifstream file(filename);
     if (!file.is_open()) return false;
 
-    // 1. Read Metadata
     file >> type >> num_vehicles >> num_customers >> num_depots;
 
-    // 2. Read Depot Constraints (Duration and Load)
-    // These are temporarily stored to be merged with depot coordinates later
     struct DepotConstraint { int duration, load; };
-    std::vector<DepotConstraint> constraints(num_depots);
+    vector<DepotConstraint> constraints(num_depots);
     for (int i = 0; i < num_depots; ++i) {
         file >> constraints[i].duration >> constraints[i].load;
     }
 
-    // 3. Read Customer Data
     for (int i = 0; i < num_customers; ++i) {
         Customer c;
         file >> c.id >> c.x >> c.y >> c.service_duration >> c.demand 
@@ -34,21 +32,18 @@ bool InstanceReader::readFile(const std::string& filename) {
         customers.push_back(c);
     }
 
-    // 4. Read Depot Locations and merge with constraints
     for (int i = 0; i < num_depots; ++i) {
-        Depot d;
+        Depott d;
         int dummy_duration, dummy_demand;
         file >> d.id >> d.x >> d.y >> dummy_duration >> dummy_demand;
         
-        // Assign constraints read from the top of the file
-        d.max_duration = constraints[i].duration;
+        d.max_distance = constraints[i].duration;
         d.max_load = constraints[i].load;
         
         depots.push_back(d);
 
-        // Clear remaining zeros in the depot line if they exist
-        std::string dummy;
-        std::getline(file, dummy);
+        string dummy;
+        getline(file, dummy);
     }
 
     file.close();
@@ -56,12 +51,10 @@ bool InstanceReader::readFile(const std::string& filename) {
 }
 
 void InstanceReader::displaySummary() const {
-    std::cout << "--- Instance Summary ---" << std::endl;
-    std::cout << "Customers: " << num_customers << std::endl;
-    std::cout << "Depots:    " << num_depots << std::endl;
-    std::cout << "Vehicles per Depot: " << num_vehicles << std::endl;
-    
-    if (!depots.empty()) {
-        std::cout << "First Depot Load Capacity: " << depots[0].max_load << std::endl;
-    }
+    cout << "--- Instance Summary ---" << endl;
+    cout << "Customers: " << num_customers << endl;
+    cout << "Depots:    " << num_depots << endl;
+    cout << "Vehicles per Depott: " << num_vehicles << endl;
+    cout << "Depott Load Capacity: " << depots[0].max_load << endl;
+    cout << "Depott Distance Capacity: " << depots[0].max_distance << endl;
 }

@@ -1,6 +1,7 @@
 #ifndef PARAMS_H
 #define PARAMS_H
 
+#include "InstanceReader.h"
 #include <vector>
 
 using namespace std;
@@ -14,14 +15,6 @@ struct Client
 	bool visited;			// Visited
 };
 
-struct Depot
-{
-    int id;                 // Id
-	double coordX;			// Coordinate X
-	double coordY;			// Coordinate Y
-    vector<Vehicle> vehicles; // Vector of Vehicles
-};
-
 struct Vehicle
 {
     int id;                 // Id
@@ -32,12 +25,24 @@ struct Vehicle
     vector<int> clientIds;  // Vector of Clients Visited
 };
 
+struct Depot
+{
+    int id;                 // Id
+	double coordX;			// Coordinate X
+	double coordY;			// Coordinate Y
+    vector<Vehicle> vehicles; // Vector of Vehicles
+};
+
 class Params 
 {
+    public:
     int numVehicles;        // Number of Vehicles per Depot
     int numClients;         // Number of Clients
     int numDepot;           // Number of Depots  
     vector<Client> clients; // Vector of Clients
     vector<Depot> depots;   // Vector of Depots
+    Params();
+    Params(const InstanceReader& reader);
+    void displaySummary() const;
 };
 #endif
