@@ -43,6 +43,7 @@ Params::Params(const InstanceReader& reader) {
 }
 
 void Params::displaySummary() const{
+    cout << "--- Instance Summary ---" << endl;
     cout << "Number of Vehicles: " << numVehicles << endl;
     cout << "Number of Clients:    " << numClients << endl;
     cout << "Number of Depots:   " << numDepot << endl;

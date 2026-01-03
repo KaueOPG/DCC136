@@ -8,7 +8,6 @@ int main() {
     InstanceReader reader;
 
     if (reader.readFile("cordeau/p01.txt")) {
-        reader.displaySummary();
         Params params(reader);
         params.displaySummary();
         } else {

@@ -55,6 +55,6 @@ void InstanceReader::displaySummary() const {
     cout << "Customers: " << num_customers << endl;
     cout << "Depots:    " << num_depots << endl;
     cout << "Vehicles per Depott: " << num_vehicles << endl;
-    cout << "Depott Load Capacity: " << depots[0].max_load << endl;
-    cout << "Depott Distance Capacity: " << depots[0].max_distance << endl;
+    cout << "Depot Load Capacity: " << depots[0].max_load << endl;
+    cout << "Depot Distance Capacity: " << depots[0].max_distance << endl;
 }
